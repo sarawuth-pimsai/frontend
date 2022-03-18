@@ -52,6 +52,6 @@ jobs:
           projectId: chatapptest-edd0d
           channelId: "pr"
           target: kslplus-develop
+          #     entryPoint: firebase.json
         id: deploy
-      #     entryPoint: firebase.json
       - run: echo URL: ${{steps.deploy.outputs.details_url}}
