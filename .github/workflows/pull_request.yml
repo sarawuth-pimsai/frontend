@@ -49,17 +49,17 @@ jobs:
           name: react-build-path
       - name: PR Number
         run: echo "$PR_NUMBER => ${{github.event.number}}"
-      # - name: PR Number
-      #   run: echo $PR_NUMBER ${{github.event.number}}
-      # - name: Deploy firebase
-      #   uses: FirebaseExtended/action-hosting-deploy@v0
-      #   with:
-      #     repoToken: "${{ secrets.GITHUB_TOKEN }}"
-      #     firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
-      #     expires: 14d
-      #     projectId: chatapptest-edd0d
-      #     channelId: pr_$PR_NUMBER
-      #     target: kslplus-develop
-      #     #     entryPoint: firebase.json
-      #   id: deploy
-      # - run: echo ${{steps.deploy.outputs.details_url}}
+      - name: PR Number
+        run: echo $PR_NUMBER ${{github.event.number}}
+      - name: Deploy firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
+          expires: 14d
+          projectId: chatapptest-edd0d
+          channelId: "pr_$PR_NUMBER"
+          target: kslplus-develop
+          #     entryPoint: firebase.json
+        id: deploy
+      - run: echo ${{steps.deploy.outputs.details_url}}
