@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - main
-env:
-  PR_NUMBER: ${{ github.event.number }}
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
@@ -54,6 +52,6 @@ jobs:
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHATAPPTEST_EDD0D }}"
           expires: 14d
           projectId: chatapptest-edd0d
-          channelId: "pr_$PR_NUMBER"
+          channelId: "pr"
           target: kslplus-develop
       #     entryPoint: firebase.json
