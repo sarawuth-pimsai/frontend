@@ -1,7 +1,7 @@
 {
   "hosting": [
     {
-      "target":"kslplus-develop",
+      "site":"kslplus-develop",
       "public": "build",
       "ignore": [
         "firebase.json",
