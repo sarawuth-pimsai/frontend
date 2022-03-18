@@ -35,6 +35,7 @@ jobs:
           name: react-build-path
           path: |
             build
+            .firebaserc
             firebase.json
   deploy_pr:
     runs-on: ubuntu-latest
@@ -46,14 +47,13 @@ jobs:
           name: react-build-path
       - name: List file
         run: ls -R
-        
-      # - name: Deploy firebase
-      #   uses: FirebaseExtended/action-hosting-deploy@v0
-      #   with:
-      #     repoToken: "${{ secrets.GITHUB_TOKEN }}"
-      #     firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
-      #     expires: 30d
-      #     projectId: chatapptest-edd0d
+      - name: Deploy firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHATAPPTEST_EDD0D }}"
+          expires: 30d
+          projectId: chatapptest-edd0d
       #     channelId: "pr_$PR_NUMBER"
       #     target: kslplus-develop
       #     entryPoint: firebase.json
