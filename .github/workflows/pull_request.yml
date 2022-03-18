@@ -1,7 +1,8 @@
 name: Pull Request
 on:
   push:
-    - main
+    branches:
+      - main
 env:
   PR_NUMBER: ${{ github.event.number }}
 jobs:
