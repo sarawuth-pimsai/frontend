@@ -47,6 +47,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: react-build-path
+      - run: echo $PR_NUMBER -> ${{github.event.number}}
       - name: Deploy firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
