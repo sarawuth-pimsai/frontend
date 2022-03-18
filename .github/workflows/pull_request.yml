@@ -1,0 +1,53 @@
+name: Pull Request
+on:
+  push:
+    - main
+env:
+  PR_NUMBER: ${{ github.event.number }}
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+      - name: Setup NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Install packet
+        run: npm ci
+      - name: Run test
+        run: npm test
+        env:
+          CI: true
+      # - name: Generate build staging
+      #   run: npm run build
+      #   env:
+      #     REACT_APP_STAGE: staging
+      - name: Generate build production
+        run: npm run build
+        env:
+          REACT_APP_STAGE: production
+      - name: Share artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: react-build-path
+          path: build
+  deploy_pr:
+    runs-on: ubuntu-latest
+    need: build_and_test
+    steps:
+      - name: Load build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: react-build-path
+      - name: Deploy firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
+          expires: 30d
+          projectId: chatapptest-edd0d
+          channelId: "pr_$PR_NUMBER"
+          target: kslplus-develop
+          entryPoint: firebase.json
