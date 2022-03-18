@@ -45,8 +45,8 @@ jobs:
         with:
           name: react-build-path
       - name: List file
-        run: ls -l
-        working-directory: react-build-path
+        run: ls -R
+        
       # - name: Deploy firebase
       #   uses: FirebaseExtended/action-hosting-deploy@v0
       #   with:
