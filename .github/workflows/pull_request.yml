@@ -44,13 +44,16 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: react-build-path
-      - name: Deploy firebase
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
-          expires: 30d
-          projectId: chatapptest-edd0d
-          channelId: "pr_$PR_NUMBER"
-          target: kslplus-develop
-          entryPoint: firebase.json
+      - name: List file
+        working-directory: react-build-path
+        run: ls -l
+      # - name: Deploy firebase
+      #   uses: FirebaseExtended/action-hosting-deploy@v0
+      #   with:
+      #     repoToken: "${{ secrets.GITHUB_TOKEN }}"
+      #     firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
+      #     expires: 30d
+      #     projectId: chatapptest-edd0d
+      #     channelId: "pr_$PR_NUMBER"
+      #     target: kslplus-develop
+      #     entryPoint: firebase.json
