@@ -36,7 +36,7 @@ jobs:
           path: build
   deploy_pr:
     runs-on: ubuntu-latest
-    need: build_and_test
+    needs: build_and_test
     steps:
       - name: Load build artifact
         uses: actions/download-artifact@v3
