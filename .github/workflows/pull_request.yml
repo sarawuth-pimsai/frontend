@@ -55,5 +55,5 @@ jobs:
           channelId: "pr"
           target: kslplus-develop
         id: deploy
-      - run: echo "URL ${{steps.deploy.outputs.urls}}"
+      - run: echo URL ${{steps.deploy.outputs.details_url}}
       #     entryPoint: firebase.json
