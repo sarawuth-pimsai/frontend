@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "chatapptest-edd0d"
+  },
+  "targets": {
+    "chatapptest-edd0d": {
+      "hosting": {
+        "kslplus-develop": [
+          "build"
+        ]
+      }
+    }
   }
 }
