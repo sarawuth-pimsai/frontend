@@ -3,12 +3,16 @@ on:
   push:
     branches:
       - main
+env:
+  PR_NUMBER: ${{github.event.number}}
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout branch
         uses: actions/checkout@v3
+        with:
+          ref: ${{github.event.head.ref}}
       - name: Setup NodeJS
         uses: actions/setup-node@v2
         with:
@@ -50,7 +54,7 @@ jobs:
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
           expires: 14d
           projectId: chatapptest-edd0d
-          channelId: "pr"
+          channelId: pr_$PR_NUMBER
           target: kslplus-develop
           #     entryPoint: firebase.json
         id: deploy
