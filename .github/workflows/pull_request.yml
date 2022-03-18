@@ -52,7 +52,7 @@ jobs:
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_CHATAPPTEST_EDD0D }}"
-          expires: 30d
+          # expires: 30d
           projectId: chatapptest-edd0d
       #     channelId: "pr_$PR_NUMBER"
       #     target: kslplus-develop
