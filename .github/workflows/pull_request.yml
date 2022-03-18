@@ -54,4 +54,4 @@ jobs:
           target: kslplus-develop
           #     entryPoint: firebase.json
         id: deploy
-      - run: echo URL: ${{steps.deploy.outputs.details_url}}
+      - run: echo ${{steps.deploy.outputs.details_url}}
