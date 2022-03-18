@@ -58,8 +58,10 @@ jobs:
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
           expires: 14d
           projectId: chatapptest-edd0d
-          channelId: $PR_NUMBER
+          channelId: $CHANNEL_ID
           target: kslplus-develop
           #     entryPoint: firebase.json
         id: deploy
+        env:
+          CHANNEL_ID: "pr_$PR_NUMBER"
       - run: echo ${{steps.deploy.outputs.details_url}}
