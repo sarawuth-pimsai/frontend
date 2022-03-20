@@ -6,43 +6,10 @@ on:
 env:
   PR_NUMBER: ${{github.event.number}}
 jobs:
-  # build_and_test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout branch
-  #       uses: actions/checkout@v3
-  #       with:
-  #         ref: ${{github.event.head.ref}}
-  #     - name: Setup NodeJS
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: '14'
-  #     - name: Install packet
-  #       run: npm ci
-  #     - name: Run test
-  #       run: npm test
-  #       env:
-  #         CI: true
-  #     # - name: Generate build staging
-  #     #   run: npm run build
-  #     #   env:
-  #     #     REACT_APP_STAGE: staging
-  #     - name: Generate build staging
-  #       run: npm run build
-  #       env:
-  #         REACT_APP_STAGE: staging
-  #     - name: Share artifact
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: react-build-path
-  #         path: |
-  #           build
-  #           .firebaserc
-  #           firebase.json
   build_and_test:
     uses: ./.github/workflows/build_test.yml
     with:
-      state: staging
+      state: production
 
   deploy_pr:
     runs-on: ubuntu-latest
