@@ -40,7 +40,7 @@ jobs:
   #           .firebaserc
   #           firebase.json
   build_and_test:
-    uses: ./.github/workflow/build_test.yml
+    uses: ./.github/workflows/build_test.yml
     with:
       state: staging
 
