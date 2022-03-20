@@ -19,7 +19,7 @@ jobs:
       - run: echo "${{ toJson(github) }}"
   check_status:
     runs-on: ubuntu-latest
-    needs: check_label
+    needs: build
     steps:
       - name: Step Always
         run: echo "Always"
