@@ -1,0 +1,12 @@
+name: Action on label
+on:
+  push:
+    types:
+      - labeled
+
+jobs:
+  check_label:
+    if: github.event.label.name == 'ready-to-merge'
+    runs-on: ubuntu-latest
+    steps:
+      run: echo "${{ toJson(github) }}"
