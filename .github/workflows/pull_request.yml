@@ -40,10 +40,10 @@ jobs:
   #           .firebaserc
   #           firebase.json
   build_and_test:
-    uses: .github/workflow/build_test.yml
+    uses: ./.github/workflow/build_test.yml
     with:
       state: staging
-      
+
   deploy_pr:
     runs-on: ubuntu-latest
     needs: build_and_test
