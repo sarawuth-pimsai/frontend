@@ -2,16 +2,21 @@ name: Pull Request
 on:
   pull_request:
     branches:
-      - main
+      - dev
 env:
-  PR_NUMBER: ${{github.event.number}}
+  FIREBASE_PROJECT_ID: chatapptest-edd0d
+  FIREBASE_TARGET: kslplus-develop
+  FIREBASE_CHANNEL_ID: PR-${{ github.event.number }}
+  FIREBASE_EXPIRES: 14d
+  PR_NUMBER: ${{ github.event.number }}
+
 jobs:
   build_and_test:
     uses: ./.github/workflows/build_test.yml
     with:
-      state: production
+      state: staging
 
-  deploy_pr:
+  deploy_preview_channels:
     runs-on: ubuntu-latest
     needs: build_and_test
     steps:
@@ -19,19 +24,12 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: react-build-path
-      - name: PR Number
-        run: echo "$PR_NUMBER => ${{github.event.number}}"
-      - name: PR Number
-        run: echo $PR_NUMBER ${{github.event.number}}
       - name: Deploy firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
-          expires: 14d
-          projectId: chatapptest-edd0d
-          channelId: PR-${{env.PR_NUMBER}}
-          target: kslplus-develop
-          #     entryPoint: firebase.json
-        id: deploy
-      - run: echo ${{steps.deploy.outputs.details_url}}
+          expires: ${{env.FIREBASE_EXPIRES}}
+          projectId: ${{env.FIREBASE_PROJECT_ID}}
+          channelId: ${{env.FIREBASE_CHANNEL_ID}}
+          target: ${{env.FIREBASE_TARGET}}
