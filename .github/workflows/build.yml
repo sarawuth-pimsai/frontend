@@ -34,3 +34,9 @@ jobs:
             build
             .firebaserc
             firebase.json
+      - name: Test Failure
+        if: ${{ failure() }}
+        run: echo "Failure"
+      - name: Test Always
+        if: ${{ always() }}
+        run: echo "Always"
