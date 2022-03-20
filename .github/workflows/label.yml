@@ -17,3 +17,29 @@ jobs:
     needs: build
     steps:
       - run: echo "${{ toJson(github) }}"
+      - name: Step Always
+        run: echo "Always"
+        if: always()
+      - name: Step Failure
+        run: echo "Failure"
+        if: failure()
+  if_error_or_failure:
+    if: >-
+      github.event.state == 'error' ||
+      github.event.state == 'failure'
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          DESCRIPTION: ${{github.event.description}}
+        run: |
+          echo The status is error or failed: $DESCRIPTION
+  if_success:
+    if: github.event.state == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ toJson(github.event) }}"
+  if_pending:
+    if: github.event.state == 'pending'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ toJson(github.event) }}"
