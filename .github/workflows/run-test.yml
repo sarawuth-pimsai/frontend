@@ -1,0 +1,20 @@
+name: Run test application
+on:
+  workflow_dispatch:
+    inputs:
+      state:
+        required: true
+        type: choice
+        description: State
+        options:
+        - development
+        - production
+jobs:
+  build:
+    runs-on: [self-hosted]
+    steps:
+      - name: ${{ github.ref }}
+        run: echo "${{ github.ref }}"
+      - name: Build
+        run: echo "${{ github.event.inputs.state }}"
+      usees: ./.github/workflows/build
