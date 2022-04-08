@@ -1,4 +1,4 @@
-name: Run test application
+name: Test application
 on:
   workflow_dispatch:
     inputs:
