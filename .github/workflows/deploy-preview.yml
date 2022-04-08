@@ -1,0 +1,40 @@
+name: Deploy preview channel
+on:
+  workflow_dispatch:
+    inputs:
+      state:
+        required: true
+        type: choice
+        description: State
+        options:
+        - development
+        - production
+jobs:
+  hello_world:
+    runs-on: [self-hosted]
+    steps:
+      - name: ${{ github.ref }}
+        run: echo "${{ github.ref }}"
+      - name: Echo
+        run: echo "${{ github.event.inputs.state }}"
+  build_and_test:
+    uses: ./.github/workflows/build.yml
+    with:
+      state: staging
+  deploy_preview_channels:
+    runs-on: [self-hosted]
+    needs: build_and_test
+    steps:
+      - name: Load build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: react-build-path
+      - name: Deploy firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
+          expires: ${{env.FIREBASE_EXPIRES}}
+          projectId: ${{env.FIREBASE_PROJECT_ID}}
+          channelId: ${{env.FIREBASE_CHANNEL_ID}}
+          target: ${{env.FIREBASE_TARGET}}
