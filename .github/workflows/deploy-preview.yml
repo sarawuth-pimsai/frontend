@@ -12,7 +12,7 @@ on:
 env:
   FIREBASE_PROJECT_ID: chatapptest-edd0d
   FIREBASE_TARGET: kslplus-development
-  FIREBASE_CHANNEL_ID: PR-${{ github.event.number }}-DEVELOPMENT
+  FIREBASE_CHANNEL_ID: PR-${{ github.ref_name }}-DEVELOPMENT
   FIREBASE_EXPIRES: 14d
   PR_NUMBER: ${{ github.event.number }}
   
