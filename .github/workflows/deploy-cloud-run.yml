@@ -14,7 +14,7 @@ env:
   SERVICE: github_actions
 jobs:
   build_and_test:
-    uses: ./.github/workflows/build.yml
+    uses: ./.github/workflows/build-test.yml
     with:
       state: staging
   deploy_preview_channels:
