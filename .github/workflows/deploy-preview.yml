@@ -35,7 +35,7 @@ jobs:
       - name: Load build artifact
         uses: actions/download-artifact@v3
         with:
-          name: react-build-path
+          name: react-build
       - name: Deploy firebase
         id: firebase_preview
         uses: FirebaseExtended/action-hosting-deploy@v0

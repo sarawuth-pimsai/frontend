@@ -24,7 +24,7 @@ jobs:
       - name: Load build artifact
         uses: actions/download-artifact@v3
         with:
-          name: react-build-path
+          name: react-build
       - id: auth
         uses: 'google-github-actions/auth@v0'
         with:
