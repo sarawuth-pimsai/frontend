@@ -17,4 +17,7 @@ jobs:
         run: echo "${{ github.ref }}"
       - name: Echo
         run: echo "${{ github.event.inputs.state }}"
-      - uses: ./.github/workflows/build.yml
+  build:
+    uses: ./.github/workflows/build.yml
+    with:
+      state: staging
