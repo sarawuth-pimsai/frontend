@@ -17,13 +17,13 @@ env:
   PR_NUMBER: ${{ github.event.number }}
   
 jobs:
-  hello_world:
-    runs-on: [self-hosted]
-    steps:
-      - name: ${{ github.ref }}
-        run: echo "${{ github.ref }}"
-      - name: Echo
-        run: echo "${{ github.event.inputs.state }}"
+  # hello_world:
+  #   runs-on: [self-hosted]
+  #   steps:
+  #     - name: ${{ github.ref }}
+  #       run: echo "${{ github.ref }}"
+  #     - name: Echo
+  #       run: echo "${{ github.event.inputs.state }}"
   build_and_test:
     uses: ./.github/workflows/build.yml
     with:
@@ -37,6 +37,7 @@ jobs:
         with:
           name: react-build-path
       - name: Deploy firebase
+        id: firebase_preview
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
@@ -45,3 +46,5 @@ jobs:
           projectId: ${{env.FIREBASE_PROJECT_ID}}
           channelId: ${{env.FIREBASE_CHANNEL_ID}}
           target: ${{env.FIREBASE_TARGET}}
+      - name: Preview URL
+        run: echo "${{steps.firebase_preview.outputs.details_url}}"
