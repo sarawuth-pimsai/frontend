@@ -34,9 +34,3 @@ jobs:
             build
             .firebaserc
             firebase.json
-      - name: Test Failure
-        if: ${{ failure() }}
-        run: echo "Failure"
-      - name: Test Success
-        if: ${{ success() }}
-        run: echo "Success"
