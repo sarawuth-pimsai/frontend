@@ -17,3 +17,4 @@ jobs:
         run: echo "${{ github.ref }}"
       - name: Echo
         run: echo "${{ github.event.inputs.state }}"
+      - uses: ./.github/build.yml
