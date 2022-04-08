@@ -17,6 +17,4 @@ jobs:
         run: echo "${{ github.ref }}"
       - name: Echo
         run: echo "${{ github.event.inputs.state }}"
-      - name: Checkout Github
-        uses: actions/checkout@v3
       - uses: ./.github/workflows/build.yml
