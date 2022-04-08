@@ -10,11 +10,10 @@ on:
         - development
         - production
 jobs:
-  build:
+  hello_world:
     runs-on: [self-hosted]
     steps:
       - name: ${{ github.ref }}
         run: echo "${{ github.ref }}"
-      - name: Build
+      - name: Echo
         run: echo "${{ github.event.inputs.state }}"
-      usees: ./.github/workflows/build
