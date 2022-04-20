@@ -9,6 +9,7 @@ on:
 env:
   STATE: ${{github.base_ref == 'main' && 'production' || 'staging' }}
   FIREBASE_PROJECT_ID: chatapptest-edd0d
+  FIREBASE_TARGET: ${{github.base_ref == 'main' && 'kslplus-development' || 'kslmessaging-staging' }} 
   FIREBASE_CHANNEL_ID: live
 
 jobs:
@@ -54,6 +55,7 @@ jobs:
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
           projectId: ${{env.FIREBASE_PROJECT_ID}}
           channelId: ${{env.FIREBASE_CHANNEL_ID}}
+          target: ${{env.FIREBASE_TARGET}}
       - name: Preview URL
         run: echo "${{steps.firebase_hosting.outputs.details_url}}"
   
