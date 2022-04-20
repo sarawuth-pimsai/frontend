@@ -6,7 +6,6 @@ on:
       - dev
 
 env:
-  EVENT_ENV: ${{ toJSON(github) }}
   STATE: ${{github.base_ref == 'main' && 'production' || 'staging' }}
   FIREBASE_PROJECT_ID: chatapptest-edd0d
   FIREBASE_TARGET: ${{github.base_ref == 'main' && 'kslplus-development' || 'kslmessaging-staging' }} 
@@ -14,47 +13,31 @@ env:
   FIREBASE_EXPIRES: 14d
 
 jobs:
-  print_event_env:
-    runs-on: [self-hosted]
-    steps:
-      - run: echo 'Checkout'
-      - run: echo 'Install'
-      - run: echo 'Test'
-      - run: echo 'Build'
-      - run: echo 'Deploy PR'
-      - run: echo '${{ env.EVENT_ENV }}'
-      - run: echo '${{ toJSON(github.event.pull_request) }}'
-      - run: echo ${{env.STATE}}
   build:
     runs-on: [self-hosted]
     steps:
-      - uses: actions/checkout@v3
-      - run: ls -l ./.github/workflows
-      - uses: ./.github/workflows/build-deploy.yml
+      - name: Build and Test Application
+        uses: ./.github/workflows/build-deploy.yml
         with:
-          state: staging
-      # - name: Build and Test Application
-      #   uses: ./.github/workflows/build-deploy.yml
-      #   with:
-      #     state: ${{ env.STATE }}
-  # deploy_preview_channels:
-  #   runs-on: [self-hosted]
-  #   needs: build
-  #   steps:
-  #     - name: Load build artifact
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: application-artiface
-  #     - name: Deploy firebase on PR
-  #       id: firebase_preview
-  #       uses: FirebaseExtended/action-hosting-deploy@v0
-  #       with:
-  #         repoToken: "${{ secrets.GITHUB_TOKEN }}"
-  #         firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
-  #         expires: ${{env.FIREBASE_EXPIRES}}
-  #         projectId: ${{env.FIREBASE_PROJECT_ID}}
-  #         channelId: ${{env.FIREBASE_CHANNEL_ID}}
-  #         target: ${{env.FIREBASE_TARGET}}
-  #     - name: Preview URL
-  #       run: echo "${{steps.firebase_preview.outputs.details_url}}"
+          state: ${{ env.STATE }}
+  deploy_preview_channels:
+    runs-on: [self-hosted]
+    needs: build
+    steps:
+      - name: Load build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: application-artiface
+      - name: Deploy firebase on PR
+        id: firebase_preview
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
+          expires: ${{env.FIREBASE_EXPIRES}}
+          projectId: ${{env.FIREBASE_PROJECT_ID}}
+          channelId: ${{env.FIREBASE_CHANNEL_ID}}
+          target: ${{env.FIREBASE_TARGET}}
+      - name: Preview URL
+        run: echo "${{steps.firebase_preview.outputs.details_url}}"
 
