@@ -13,15 +13,15 @@ env:
   FIREBASE_CHANNEL_ID: live
 
 jobs:
-  environment:
-    runs-on: [self-hosted]
-    steps:
-      - name: Stage
-        run: echo "${{ env.STATE }}"
-      - name: Github Env
-        run: echo "${{ toJSON(github) }}"
-      - name: Event Env
-        run: echo "${{ toJSON(github.event) }}"
+  # environment:
+  #   runs-on: [self-hosted]
+  #   steps:
+  #     - name: Stage
+  #       run: echo "${{ env.STATE }}"
+  #     - name: Github Env
+  #       run: echo "${{ toJSON(github) }}"
+  #     - name: Event Env
+  #       run: echo "${{ toJSON(github.event) }}"
   build:
     runs-on: [self-hosted]
     steps:
