@@ -20,7 +20,7 @@ jobs:
         with:
           ref: main
       - name: Build and Test Application
-        uses: ./.github/workflows/build-deploy.yml@main
+        uses: ./.github/workflows/build-deploy.yml
         with:
           state: ${{ env.STATE }}
   deploy_preview_channels:
