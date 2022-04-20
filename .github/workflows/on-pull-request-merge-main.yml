@@ -1,26 +1,69 @@
 name: On pull request main closed
 on: 
   pull_request:
-    branches: [main]
+    branches: 
+      - main
+      - dev
     types: [closed]
+
 env:
-  EVENT_ENV: ${{ toJSON(github) }}
+  STATE: ${{github.base_ref == 'main' && 'production' || 'staging' }}
+  FIREBASE_PROJECT_ID: chatapptest-edd0d
+  FIREBASE_TARGET: ${{github.base_ref == 'main' && 'kslplus-development' || 'kslmessaging-staging' }} 
+  FIREBASE_CHANNEL_ID: live
+
 jobs:
-  print_event_env:
+  environment:
     runs-on: [self-hosted]
     steps:
-      - run: echo '${{ env.EVENT_ENV }}'
-      - run: echo '${{ toJSON(github.event.pull_request) }}'
-  rebase_dev:
-    if: github.event.pull_request.merged == true
+      - name: Stage
+        run: echo "${{ env.STATE }}"
+      - name: Github Env
+        run: echo "${{ toJSON(github) }}"
+      - name: Event Env
+        run: echo "${{ toJSON(github.event) }}"
+  build:
     runs-on: [self-hosted]
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout from github
+        uses: actions/checkout@v3
+      - name: Setup Node 14
+        uses: actions/setup-node@v3
         with:
-          ref: 'dev'
-          fetch-depth: 0
-      - name: Rebase dev branch
-        uses: sarawuth-pimsai/frontend/.github/actions/merge_hotfix
+          node-version: "14"
+      - name: Install Package and Test
+        run: npm ci && npm run test
+        env:
+          CI: true
+      - name: Build Application to artifact
+        run: npm run build
+        env:
+          REACT_APP_STAGE: ${{ env.STATE }}
+      - name: Upload to artifact
+        uses: actions/upload-artifact@v3
         with:
-          token: ${{secrets.GITHUB_TOKEN}}
-      
+          name: application-artiface
+          path: |
+            build
+            .firebaserc
+            firebase.json
+
+  deploy_hosting:
+    runs-on: [self-hosted]
+    needs: build
+    steps:
+      - name: Load build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: application-artiface
+      - name: Deploy firebase hosting
+        id: firebase_hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
+          projectId: ${{env.FIREBASE_PROJECT_ID}}
+          channelId: ${{env.FIREBASE_CHANNEL_ID}}
+          target: ${{env.FIREBASE_TARGET}}
+      - name: Preview URL
+        run: echo "${{steps.firebase_hosting.outputs.details_url}}"
