@@ -81,6 +81,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Output Tag Version
-        run: |
-          "echo ${{ toJSON(steps.tag_version.outputs) }}"
+        env : { VERSION_OUTPUT : "${{ toJson(steps.tag_version.outputs) }}" }
+        run : "echo $VERSION_OUTPUT"
         
