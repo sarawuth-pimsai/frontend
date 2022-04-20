@@ -67,3 +67,19 @@ jobs:
           target: ${{env.FIREBASE_TARGET}}
       - name: Preview URL
         run: echo "${{steps.firebase_hosting.outputs.details_url}}"
+
+  create_tag:
+    if: github.base_ref == 'main'
+    runs-on: [self-hosted]
+    steps:
+      - name: Checkout from github
+        uses: actions/checkout@v3
+      - name: Push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Output Tag Version
+        run: |
+          echo "${{ toJSON(steps.tag_version.outputs) }}"
+        
