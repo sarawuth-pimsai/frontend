@@ -28,7 +28,7 @@ jobs:
     runs-on: [self-hosted]
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/build-deploy.yml
+      - uses: sarawuth-pimsai/frontend/.github/workflows/build-deploy.yml
         with:
           state: ${{ env.STATE }}
   deploy_hosting:
