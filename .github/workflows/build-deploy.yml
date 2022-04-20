@@ -15,7 +15,7 @@ jobs:
       - name: Setup Node 14
         uses: actions/setup-node@v3
         with:
-          node-verison: "14"
+          node-version: "14"
       - run: npm ci && npm run test
         env:
           CI: true
