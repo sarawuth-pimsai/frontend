@@ -7,30 +7,36 @@ on:
     types: [submitted]
 
 env:
+  STATE: ${{github.base_ref == 'main' && 'production' || 'staging' }}
   FIREBASE_PROJECT_ID: chatapptest-edd0d
-  STATE: ${{github.ref_name == 'main' && 'production' || 'staging' }}
 
 jobs:
-  print_env:
-    runs-on: [self-hosted]
-    steps:
-      - name: 'Github Env'
-        id: inputs
-        env:
-          ENV_BRANCH: ${{github.ref}}
-          ENV_BRANCH_NAME: ${{github.ref_name}}
-          ENV_VALUE: ${{ toJSON(github) }}
-        run: |
-          echo 'branch name: ${{env.ENV_BRANCH_NAME}}'
-          echo 'branch: ${{env.ENV_BRANCH}}'
-          echo '${{env.ENV_VALUE}}'
   build:
     runs-on: [self-hosted]
     steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/workflows/build-deploy.yml
+      - name: Checkout from github
+        uses: actions/checkout@v3
+      - name: Setup Node 14
+        uses: actions/setup-node@v3
         with:
-          state: ${{ env.STATE }}
+          node-version: "14"
+      - name: Install Package and Test
+        run: npm ci && npm run test
+        env:
+          CI: true
+      - name: Build Application to artifact
+        run: npm run build
+        env:
+          REACT_APP_STAGE: ${{ env.STATE }}
+      - name: Upload to artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: application-artiface
+          path: |
+            build
+            .firebaserc
+            firebase.json
+
   deploy_hosting:
     runs-on: [self-hosted]
     needs: build
