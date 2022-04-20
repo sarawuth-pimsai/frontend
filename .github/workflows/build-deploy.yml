@@ -10,10 +10,12 @@ jobs:
   checkout:
     runs-on: [self-hosted]
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-verison: "14"
+      - name: Github checkout
+        uses: actions/checkout@v3
+      - name: Setup Node 14
+        uses: actions/setup-node@v3
+          with:
+            node-verison: "14"
       - run: npm ci && npm run test
         env:
           CI: true
