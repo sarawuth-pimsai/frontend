@@ -84,3 +84,11 @@ jobs:
         env : { VERSION_OUTPUT : "${{ toJson(steps.tag_version.outputs) }}" }
         run : "echo $VERSION_OUTPUT"
         
+  rebase:
+    if: github.base_ref == 'main'
+    runs-on: [self-hosted]
+    needs: create_tag
+    steps:
+      - name: Process rebase && Re open pull request in dev branch
+        run: echo "Hello"
+        
