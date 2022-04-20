@@ -1,0 +1,9 @@
+name: 'Merge hotfix'
+description: 'Merge hotfix branch to main branch and Reset and rebase dev branch'
+inputs:
+  token:
+    required: true
+    description: Github token
+runs:
+  using: 'node16'
+  main: 'index.js'

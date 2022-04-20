@@ -8,6 +8,15 @@
         "**/.*",
         "**/node_modules/**"
       ]
+    },
+    {
+      "site":"kslmessaging-staging",
+      "public": "build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
     }
   ]
 }

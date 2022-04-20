@@ -1,0 +1,13 @@
+name: Build test application
+on: [workflow_call]
+jobs:
+  build_test:
+    runs-on: [self-hosted]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-verison: "14"
+      - run: npm install && npm run test
+        env:
+          CI: true

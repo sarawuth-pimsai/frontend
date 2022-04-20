@@ -1,0 +1,27 @@
+name: On pull request main closed
+on: 
+  pull_request:
+    branches: [main]
+    types: [closed]
+env:
+  EVENT_ENV: ${{ toJSON(github.event) }}
+jobs:
+  print_event_env:
+    runs-on: [self-hosted]
+    steps:
+      - run: echo '${{ env.EVENT_ENV }}'
+      - run: echo '${{ toJSON(github.event.pull_request) }}'
+  rebase_dev:
+    if: github.event.pull_request.merged == true
+    runs-on: [self-hosted]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: 'dev'
+          fetch-depth: 0
+      - uses: ./.github/actions/branches
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+          branch_dev: dev
+          branch_rebase: main
+      
