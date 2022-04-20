@@ -16,9 +16,8 @@ jobs:
   build:
     runs-on: [self-hosted]
     steps:
-      - uses: actions/checkout@v3
       - name: Build and Test Application
-        uses: sarawuth-pimsai/frontend/.github/workflows/build-deploy.yml
+        uses: ./.github/workflows/build-deploy.yml@main
         with:
           state: ${{ env.STATE }}
   deploy_preview_channels:
