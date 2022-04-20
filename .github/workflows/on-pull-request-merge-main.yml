@@ -71,6 +71,7 @@ jobs:
   create_tag:
     if: github.base_ref == 'main'
     runs-on: [self-hosted]
+    needs: deploy_hosting
     steps:
       - name: Checkout from github
         uses: actions/checkout@v3
