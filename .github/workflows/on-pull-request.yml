@@ -28,8 +28,7 @@ jobs:
     runs-on: [self-hosted]
     steps:
       - uses: actions/checkout@v3
-      - run: |
-        ls -l ./.github/workflows
+      - run: ls -l ./.github/workflows
       # - name: Build and Test Application
       #   uses: ./.github/workflows/build-test.yml
       #   with:
