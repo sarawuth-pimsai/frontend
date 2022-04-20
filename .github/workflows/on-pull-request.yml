@@ -24,7 +24,7 @@ jobs:
       - run: echo 'Deploy PR'
       - run: echo '${{ env.EVENT_ENV }}'
       - run: echo '${{ toJSON(github.event.pull_request) }}'
-      - run: echo ${{STATE}}
+      - run: echo ${{env.STATE}}
   build:
     runs-on: [self-hosted]
     steps:
