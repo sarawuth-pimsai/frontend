@@ -27,28 +27,31 @@ jobs:
   build:
     runs-on: [self-hosted]
     steps:
-      - name: Build and Test Application
-        uses: ./.github/workflows/build-test.yml
-        with:
-          state: ${{ env.STATE }}
-  deploy_preview_channels:
-    runs-on: [self-hosted]
-    needs: build
-    steps:
-      - name: Load build artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: application-artiface
-      - name: Deploy firebase on PR
-        id: firebase_preview
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
-          expires: ${{env.FIREBASE_EXPIRES}}
-          projectId: ${{env.FIREBASE_PROJECT_ID}}
-          channelId: ${{env.FIREBASE_CHANNEL_ID}}
-          target: ${{env.FIREBASE_TARGET}}
-      - name: Preview URL
-        run: echo "${{steps.firebase_preview.outputs.details_url}}"
+      - uses: actions/checkout@v3
+      - run: |
+        ls -l ./.github/workflows
+      # - name: Build and Test Application
+      #   uses: ./.github/workflows/build-test.yml
+      #   with:
+      #     state: ${{ env.STATE }}
+  # deploy_preview_channels:
+  #   runs-on: [self-hosted]
+  #   needs: build
+  #   steps:
+  #     - name: Load build artifact
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: application-artiface
+  #     - name: Deploy firebase on PR
+  #       id: firebase_preview
+  #       uses: FirebaseExtended/action-hosting-deploy@v0
+  #       with:
+  #         repoToken: "${{ secrets.GITHUB_TOKEN }}"
+  #         firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
+  #         expires: ${{env.FIREBASE_EXPIRES}}
+  #         projectId: ${{env.FIREBASE_PROJECT_ID}}
+  #         channelId: ${{env.FIREBASE_CHANNEL_ID}}
+  #         target: ${{env.FIREBASE_TARGET}}
+  #     - name: Preview URL
+  #       run: echo "${{steps.firebase_preview.outputs.details_url}}"
 
