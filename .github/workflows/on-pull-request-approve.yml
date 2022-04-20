@@ -9,7 +9,7 @@ on:
 env:
   FIREBASE_PROJECT_ID: chatapptest-edd0d
   STATE: ${{github.ref_name == 'main' && 'production' || 'staging' }}
-  
+
 jobs:
   print_env:
     runs-on: [self-hosted]
@@ -27,7 +27,7 @@ jobs:
   build:
     runs-on: [self-hosted]
     steps:
-      - uses: ./.github/workflows/build-deploy
+      - uses: ./.github/workflows/build-deploy.yml
         with:
           state: ${{ env.STATE }}
   deploy_hosting:
