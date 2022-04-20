@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build and Test Application
-        uses: sarawuth-pimsai/frontend/.github/workflows/build-deploy.yml
+        uses: ./.github/workflows/build-deploy.yml
         with:
           state: ${{ env.STATE }}
   deploy_preview_channels:
