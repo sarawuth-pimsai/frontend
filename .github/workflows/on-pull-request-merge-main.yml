@@ -19,9 +19,8 @@ jobs:
         with:
           ref: 'dev'
           fetch-depth: 0
-      - uses: ./.github/actions/branches
+      - name: Rebase dev branch
+      - uses: sarawuth-pimsai/frontend/.github/actions/merge_hotfix
         with:
           token: ${{secrets.GITHUB_TOKEN}}
-          branch_dev: dev
-          branch_rebase: main
       
