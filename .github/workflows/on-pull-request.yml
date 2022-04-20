@@ -6,7 +6,7 @@ on:
       - dev
 
 env:
-  EVENT_ENV: ${{ toJSON(github.event) }}
+  EVENT_ENV: ${{ toJSON(github) }}
   STATE: ${{github.ref_name == 'main' && 'production' || 'staging' }}
   FIREBASE_PROJECT_ID: chatapptest-edd0d
   FIREBASE_TARGET: ${{github.ref_name == 'main' && 'kslplus-development' || 'kslmessaging-staging' }} 
@@ -24,13 +24,17 @@ jobs:
       - run: echo 'Deploy PR'
       - run: echo '${{ env.EVENT_ENV }}'
       - run: echo '${{ toJSON(github.event.pull_request) }}'
+      - run: echo ${{STATE}}
   build:
     runs-on: [self-hosted]
     steps:
       - uses: actions/checkout@v3
       - run: ls -l ./.github/workflows
+      - uses: ./.github/workflows/build-deploy.yml
+        with:
+          state: staging
       # - name: Build and Test Application
-      #   uses: ./.github/workflows/build-test.yml
+      #   uses: ./.github/workflows/build-deploy.yml
       #   with:
       #     state: ${{ env.STATE }}
   # deploy_preview_channels:
