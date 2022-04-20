@@ -4,6 +4,11 @@ on:
     branches:
       - main
       - dev
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
 
 env:
   STATE: ${{github.base_ref == 'main' && 'production' || 'staging' }}
