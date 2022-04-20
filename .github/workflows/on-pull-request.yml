@@ -7,9 +7,9 @@ on:
 
 env:
   EVENT_ENV: ${{ toJSON(github) }}
-  STATE: ${{github.ref_name == 'main' && 'production' || 'staging' }}
+  STATE: ${{github.base_ref == 'main' && 'production' || 'staging' }}
   FIREBASE_PROJECT_ID: chatapptest-edd0d
-  FIREBASE_TARGET: ${{github.ref_name == 'main' && 'kslplus-development' || 'kslmessaging-staging' }} 
+  FIREBASE_TARGET: ${{github.base_ref == 'main' && 'kslplus-development' || 'kslmessaging-staging' }} 
   FIREBASE_CHANNEL_ID: PR-${{ github.event.number }}-DEVELOPMENT
   FIREBASE_EXPIRES: 14d
 
