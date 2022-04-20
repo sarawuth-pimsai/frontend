@@ -13,6 +13,11 @@ env:
   FIREBASE_EXPIRES: 14d
 
 jobs:
+  print_env:
+    runs-on: [self-hosted]
+    steps:
+      - name: Print github env
+        run: echo '${{ toJSON(github) }}'
   build:
     runs-on: [self-hosted]
     steps:

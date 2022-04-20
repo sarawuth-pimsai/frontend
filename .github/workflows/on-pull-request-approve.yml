@@ -9,6 +9,7 @@ on:
 env:
   STATE: ${{github.base_ref == 'main' && 'production' || 'staging' }}
   FIREBASE_PROJECT_ID: chatapptest-edd0d
+  FIREBASE_CHANNEL_ID: live
 
 jobs:
   build:
@@ -52,7 +53,7 @@ jobs:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
           projectId: ${{env.FIREBASE_PROJECT_ID}}
-          target: ${{env.FIREBASE_TARGET}}
+          channelId: ${{env.FIREBASE_CHANNEL_ID}}
       - name: Preview URL
         run: echo "${{steps.firebase_hosting.outputs.details_url}}"
   
