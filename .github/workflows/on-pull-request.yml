@@ -29,8 +29,8 @@ jobs:
     steps:
       - name: Build and Test Application
         uses: ./.github/workflows/build-deploy.yml
-          with:
-            state: ${{ env.STATE }}
+        with:
+          state: ${{ env.STATE }}
   deploy_preview_channels:
     runs-on: [self-hosted]
     needs: build
