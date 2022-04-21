@@ -2,7 +2,7 @@ name: Test application
 on: [push]
 jobs:
   test_script:
-    runs-on: [self-hosted]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Gtihub
         uses: actions/checkout@v3
