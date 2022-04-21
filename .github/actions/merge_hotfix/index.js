@@ -9856,7 +9856,7 @@ async function createPullRequest(token, base, head, title, body) {
 async function run() {
   try {
     const token = core.getInput("token");
-    let diffCommits = await cmd("git", "log", "--format=%H", "origin/main...HEAD")
+    let diffCommits = await cmd("git", "log", "--format=%H", "origin/main...origin/dev")
     if(diffCommits.length === 0) return
     const tags = await cmd("git", "describe", "--tags", "--abbrev=0");
     if(tags.length === 0) throw new Error("Please create tags")
@@ -9899,11 +9899,11 @@ async function run() {
         };
       });
     for (data of pullRequestData) {
-      let revertBranch = `revert-${data.number}-${data.branch}`;
-      diffCommits = await cmd("git", "log", "--format=%H", `origin/dev...${revertBranch}`)
+      diffCommits = await cmd("git", "log", "--format=%H", `origin/dev...${data.commit}`)
       if(diffCommits.length > 0) {
         let title = `Revert "${data.branch}"`
         let body = `Reverts pull request #${data.number}`
+        let revertBranch = `revert-${data.number}-${data.branch}`;
         await cmd(
           "git",
           "checkout",
