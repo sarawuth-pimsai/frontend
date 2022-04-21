@@ -11,9 +11,10 @@ on:
         - production
 jobs:
   test:
-    - name: Checkout Gtihub
-      uses: actions/checkout@v3
-    - name: Test Script Default
-      uses: ./.github/actions/test
-      with:
-        token: ${{secrets.GITHUB_TOKEN}}
+    steps:
+      - name: Checkout Gtihub
+        uses: actions/checkout@v3
+      - name: Test Script Default
+        uses: ./.github/actions/test
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
