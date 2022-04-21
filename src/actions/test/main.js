@@ -2,7 +2,7 @@ import { getExecOutput } from "@actions/exec";
 const core = require("@actions/core");
 
 export async function cmd(commandLine, ...args) {
-    info(`The command ${commandLine} ${args.join(" ")}`);
+    core.info(`The command ${commandLine} ${args.join(" ")}`);
     const options = { ignoreReturnCode: true, silent: true };
     const output = await getExecOutput(commandLine, args, options);
     if (output.exitCode > 0) throw new Error(output.stderr);
