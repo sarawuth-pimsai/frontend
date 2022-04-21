@@ -96,4 +96,6 @@ jobs:
           fetch-depth: 0
       - name: Reset dev branch && Push pull request
         uses: ./.github/actions/merge_hotfix
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
         
