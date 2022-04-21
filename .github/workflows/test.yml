@@ -1,7 +1,7 @@
 name: Test application
 on: [push]
 jobs:
-  test_script:
+  reusable_workflow_job:
     runs-on: [self-hosted]
     steps:
       - name: Checkout Gtihub
@@ -17,3 +17,5 @@ jobs:
       - name: Result
         env: {OUTPUT: "${{ toJSON(steps.test.outputs) }}"}
         run: "echo $OUTPUT"
+      - name: Run local actions
+        uses: sarawuth-pimsai/frontend/.github/workflows/call.yml@main
