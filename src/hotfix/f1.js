@@ -1,3 +1,3 @@
 (async() => {
-    console.log("hotfix 1")
+    console.log("hotfix 1 ag")
 })()
