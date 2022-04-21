@@ -9,4 +9,4 @@ jobs:
       - name: Show files
         run: ls -l ./.github/workflows
       - name: Call local action
-        uses: ./.github/workflows/call.yml
+        uses: ./call.yml
