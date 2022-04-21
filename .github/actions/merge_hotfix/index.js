@@ -9899,11 +9899,11 @@ async function run() {
         };
       });
     for (data of pullRequestData) {
+      let revertBranch = `revert-${data.number}-${data.branch}`;
       diffCommits = await cmd("git", "log", "--format=%H", `origin/dev...${revertBranch}`)
       if(diffCommits.length > 0) {
         let title = `Revert "${data.branch}"`
         let body = `Reverts pull request #${data.number}`
-        let revertBranch = `revert-${data.number}-${data.branch}`;
         await cmd(
           "git",
           "checkout",
