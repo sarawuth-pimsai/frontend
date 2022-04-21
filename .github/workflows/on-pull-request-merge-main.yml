@@ -90,5 +90,6 @@ jobs:
     needs: create_tag
     steps:
       - name: Process rebase && Re open pull request in dev branch
-        run: echo "Hello"
+        run: |
+          git branch
         

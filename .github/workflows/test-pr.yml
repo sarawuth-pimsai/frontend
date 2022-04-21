@@ -13,13 +13,3 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: build
-        run: npm ci && npm run build
-      - run: echo "${{ env.PROJECT_ID }}"
-      - name: deploy
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
-          channelId: live
-          projectId: '${{ env.PROJECT_ID }}'
