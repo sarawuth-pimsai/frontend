@@ -3018,7 +3018,7 @@ __nccwpck_require__.r(__webpack_exports__);
 const core = __nccwpck_require__(186);
 
 async function cmd(commandLine, ...args) {
-    info(`The command ${commandLine} ${args.join(" ")}`);
+    core.info(`The command ${commandLine} ${args.join(" ")}`);
     const options = { ignoreReturnCode: true, silent: true };
     const output = await (0,_actions_exec__WEBPACK_IMPORTED_MODULE_0__.getExecOutput)(commandLine, args, options);
     if (output.exitCode > 0) throw new Error(output.stderr);
