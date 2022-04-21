@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@actions/core": "^1.6.0",
+    "@actions/exec": "^1.1.1",
+    "@actions/github": "^5.0.1",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
@@ -14,6 +17,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:test": "ncc build src/actions/test/main.js -o .github/actions/test",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -10,14 +10,10 @@ on:
         - development
         - production
 jobs:
-  hello_world:
-    runs-on: [self-hosted]
-    steps:
-      - name: ${{ github.ref }}
-        run: echo "${{ github.ref }}"
-      - name: Echo
-        run: echo "${{ github.event.inputs.state }}"
-  build:
-    uses: ./.github/workflows/build-test.yml
-    with:
-      state: staging
+  test:
+    - name: Checkout Gtihub
+      uses: actions/checkout@v3
+    - name: Test Script Default
+      uses: ./.github/actions/test
+      with:
+        token: ${{secrets.GITHUB_TOKEN}}

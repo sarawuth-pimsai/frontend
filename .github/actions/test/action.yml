@@ -1,0 +1,12 @@
+name: Test Script
+description: Test Script
+inputs:
+  token:
+    required: true
+    description: Github token
+outputs:
+  values:
+    description: values
+runs:
+  using: 'node16'
+  main: 'index.js'
