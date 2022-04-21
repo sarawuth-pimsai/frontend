@@ -10,7 +10,8 @@ on:
         - development
         - production
 jobs:
-  test:
+  test_script:
+    runs-on: [self-hosted]
     steps:
       - name: Checkout Gtihub
         uses: actions/checkout@v3
