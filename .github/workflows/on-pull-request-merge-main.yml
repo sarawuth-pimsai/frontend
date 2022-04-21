@@ -89,7 +89,11 @@ jobs:
     runs-on: [self-hosted]
     needs: create_tag
     steps:
-      - name: Process rebase && Re open pull request in dev branch
-        run: |
-          git branch
+      - name: Checkout Github dev branch
+        uses: actions/checkout@v3
+        with:
+          ref: dev
+          fetch-depth: 0
+      - name: Reset dev branch && Push pull request
+        uses: ./.github/actions/merge_hotfix
         

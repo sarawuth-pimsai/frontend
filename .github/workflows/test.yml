@@ -1,5 +1,5 @@
 name: Test application
-on: [push]
+on: [workflow_dispatch]
 jobs:
   reusable_workflow:
     uses: sarawuth-pimsai/frontend/.github/workflows/call.yml@main
