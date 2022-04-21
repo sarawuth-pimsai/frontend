@@ -6,5 +6,7 @@ jobs:
     steps:
       - name: Checkout Gtihub
         uses: actions/checkout@v3
+      - name: Show files
+        run: ls -l ./.github/workflows
       - name: Call local action
         uses: ./.github/workflows/call.yml
