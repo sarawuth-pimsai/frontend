@@ -6,7 +6,14 @@ jobs:
     steps:
       - name: Checkout Gtihub
         uses: actions/checkout@v3
+        with:
+          ref: dev
+          fetch-depth: 0
       - name: Show files
         run: ls -l ./.github/workflows
       - name: Call local action
-        uses: ./call.yml
+        id: test
+        uses: ./.github/actions/test
+      - name: Result
+        env: {OUTPUT: "${{ toJSON(steps.test.outputs) }}"}
+        run: "echo $OUTPUT"
