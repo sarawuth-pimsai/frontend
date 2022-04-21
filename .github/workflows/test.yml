@@ -1,28 +1,10 @@
 name: Test application
-on:
-  workflow_dispatch:
-    inputs:
-      state:
-        required: true
-        type: choice
-        description: State
-        options:
-        - development
-        - production
+on: [push]
 jobs:
   test_script:
     runs-on: [self-hosted]
     steps:
       - name: Checkout Gtihub
         uses: actions/checkout@v3
-        with:
-          ref: dev
-          fetch-depth: 0
-      - name: Test Script Default
-        id: script
-        uses: ./.github/actions/test
-        with:
-          token: ${{secrets.GITHUB_TOKEN}}
-      - name: Result
-        env: { RESULT: "${{ toJson(steps.script.outputs) }}" }
-        run: "echo $VERSION_OUTPUT"
+      - name: Call local action
+        uses: ./.github/workflows/call

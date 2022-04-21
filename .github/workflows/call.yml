@@ -1,0 +1,9 @@
+name: call
+on: [workflow_call]
+jobs:
+  active:
+    runs-on: [self-hosted]
+    steps:
+      - name: Print Env
+        env: { GITHUB_ENV: "${{ toJSON(github) }}"}
+        run: "echo $GITHUB_ENV"
